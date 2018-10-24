@@ -4,6 +4,7 @@
   "description": "Music Suggestion tool api",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "mocha --recursive"
   },
   "repository": {

@@ -38,16 +38,16 @@ app.use(cors())
 var server = app.listen(process.env.PORT || 8081, function(){
 
   if (result.error) {
-    if (process.env.NODE_ENV === "production" && result.error.code === "ENOENT") {
+    //process.env.NODE_ENV === "production" && 
+    if (result.error.code === "ENOENT") {
       console.info("expected this error because we are in production without a .env file")
     } else {
       throw result.error
     }
   }
- 
 
     //see my env file
-    console.log(result.parsed);
+    //console.log(result.parsed);
     console.log(`server running at - ${server.address().address}:${server.address().port}`);
     //console.log(`Cookies: ${req.cookies}`);
     

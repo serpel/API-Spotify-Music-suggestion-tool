@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
+      - image: gradientco/node-elastic-beanstalk:7.10.0
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -38,22 +38,14 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-        
-      # run tests!
-      #- run: 
-      #   name: "Running testing"
-      #   command: npm test
 
-
-      - run: 
-          name: "Instaling linux packages dependencies"
+      - run:
+          name: Setup AWS credentials
           command: |
-              sudo apt-get update && sudo apt-get install -y python-dev
-              sudo curl -O https://bootstrap.pypa.io/get-pip.py
-              sudo python get-pip.py
-              sudo pip install awsebcli --upgrade
+            mkdir ~/.aws && printf "[profile eb-cli]\naws_access_key_id = ${AWS_ACCESS_KEY_ID}\naws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}" > ~/.aws/config
+
       # run s3 deploy
       - run: 
-          name: "Deploy react js app to AWS"
+          name: Deploy to Elastic Beanstalk
           command: eb deploy production
 

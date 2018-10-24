@@ -35,7 +35,7 @@ var app = express();
 app.use(cors())
    .use(cookieParser());
 
-var server = app.listen(8888, function(){
+var server = app.listen(80, function(){
 
     if (result.error) {
         throw result.error

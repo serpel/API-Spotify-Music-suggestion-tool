@@ -5,7 +5,7 @@ var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-const result = dotenv.config({path: __dirname + '/.env'});
+const result = dotenv.config();
 
 var client_id = process.env.CLIENT_ID; // Your client id
 var client_secret = process.env.CLIENT_SECRET; // Your secret
@@ -37,9 +37,13 @@ app.use(cors())
 
 var server = app.listen(process.env.PORT || 8081, function(){
 
-    if (result.error) {
-        throw result.error
+  if (result.error) {
+    if (process.env.NODE_ENV === "production" && result.error.code === "ENOENT") {
+      console.info("expected this error because we are in production without a .env file")
+    } else {
+      throw result.error
     }
+  }
  
 
     //see my env file
